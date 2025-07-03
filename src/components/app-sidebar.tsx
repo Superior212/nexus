@@ -10,6 +10,7 @@ import {
   Settings,
   Users,
   Wallet,
+  FolderOpen,
 } from "lucide-react";
 
 import {
@@ -39,7 +40,13 @@ const navigationItems = [
     title: "Expenses",
     url: "/expenses",
     icon: Receipt,
-    isActive: true,
+    isActive: false,
+  },
+  {
+    title: "Projects",
+    url: "/projects",
+    icon: FolderOpen,
+    isActive: false,
   },
   {
     title: "Budget",
