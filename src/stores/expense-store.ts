@@ -4,10 +4,12 @@ import type { Expense, ExpenseSummary } from "@/types/expense";
 
 interface ExpenseState {
   expenses: Expense[];
+  isHydrated: boolean;
   // Actions
   addExpense: (expense: Omit<Expense, "id">) => void;
   updateExpenseStatus: (id: string, status: Expense["status"]) => void;
   deleteExpense: (id: string) => void;
+  setHydrated: () => void;
   // Computed values
   getSummary: () => ExpenseSummary;
   getFilteredExpenses: (
@@ -52,6 +54,11 @@ export const useExpenseStore = create<ExpenseState>()(
     persist(
       (set, get) => ({
         expenses: initialExpenses,
+        isHydrated: false,
+
+        setHydrated: () => {
+          set({ isHydrated: true });
+        },
 
         addExpense: (expenseData) => {
           const newExpense: Expense = {
@@ -138,6 +145,11 @@ export const useExpenseStore = create<ExpenseState>()(
       {
         name: "expense-storage",
         partialize: (state) => ({ expenses: state.expenses }),
+        onRehydrateStorage: () => (state) => {
+          if (state) {
+            state.setHydrated();
+          }
+        },
       }
     ),
     {

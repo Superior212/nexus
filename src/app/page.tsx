@@ -6,29 +6,25 @@ import { ExpenseSummaryCards } from "@/components/cards/expense-summary";
 import { ExpenseFilters } from "@/components/expense-filters";
 import { ExpenseTable } from "@/components/tables/expense-table";
 import { ExportButtons } from "@/components/export-buttons";
-import { useExpenseStore } from "@/stores/expense-store";
+import { useExpenses } from "@/hooks/use-expenses";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Separator } from "@/components/ui/separator";
 import { Receipt } from "lucide-react";
 
 export default function ExpensesTracker() {
-  // Use Zustand store directly for better performance
-  const addExpense = useExpenseStore((state) => state.addExpense);
-  const updateExpenseStatus = useExpenseStore(
-    (state) => state.updateExpenseStatus
-  );
-  const deleteExpense = useExpenseStore((state) => state.deleteExpense);
-  const getSummary = useExpenseStore((state) => state.getSummary);
-  const getFilteredExpenses = useExpenseStore(
-    (state) => state.getFilteredExpenses
-  );
+  const {
+    addExpense,
+    updateExpenseStatus,
+    deleteExpense,
+    getFilteredExpenses,
+    summary,
+  } = useExpenses();
 
   const [searchTerm, setSearchTerm] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [statusFilter, setStatusFilter] = useState("all");
 
   // Get computed values
-  const summary = getSummary();
   const filteredExpenses = getFilteredExpenses(
     searchTerm,
     categoryFilter,

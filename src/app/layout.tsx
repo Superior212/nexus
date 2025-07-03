@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
+import { HydrationProvider } from "@/components/hydration-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,7 +25,7 @@ export default function RootLayout({
           <div className="flex min-h-screen w-full">
             <AppSidebar />
             <main className="flex-1  dark:bg-brand-dark light:bg-brand-light">
-              {children}
+              <HydrationProvider>{children}</HydrationProvider>
             </main>
           </div>
         </SidebarProvider>
